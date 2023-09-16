@@ -28,14 +28,11 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
-    emit(AuthLoading());
-    String? token = await storage.read(key: 'token') ;
-      await authRepo.logout(
-        token ,
-      );
-      emit(AuthSuccess());
+    String? token = await storage.read(key: 'token');
+    await authRepo.logout(
+      token,
+    );
   }
-
 
   void saveUserToken(User user) async {
     await storage.write(key: 'token', value: user.token);

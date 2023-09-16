@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
-import 'package:retrofit/retrofit.dart';
+
 
 import '../../../../core/network/api_constent.dart';
 import '../model/user_model.dart';
@@ -23,16 +22,16 @@ class WebServices {
     return User.fromJson(response.data['data']);
   }
 
-  Future<User> logout(String? token) async {
-    var response = await dio.post(ApiConstants.logout,
-        data: {'token': token},
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-        ));
-    print('${response.statusCode}++++++++++++++++++++++++++++++++');
-    return response.data;
+  Future<void> logout(String? token) async {
+    await dio.post(
+      ApiConstants.logout,
+      data: {'token': token},
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ),
+    );
   }
 }

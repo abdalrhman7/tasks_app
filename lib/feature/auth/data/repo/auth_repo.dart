@@ -10,7 +10,7 @@ class AuthRepo {
    return  await webServices.login(email: email, password: password);
   }
 
-  Future<User> logout(String? token) async {
-    return  await webServices.logout(token);
+  Future<void> logout(String? token) async {
+      await webServices.logout(token);
   }
 }

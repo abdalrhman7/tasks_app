@@ -12,12 +12,13 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: MainButton(
-            text: 'logout',
-            onTap: () {
-              BlocProvider.of<AuthCubit>(context).logout();
-              Navigator.of(context).pop();
-            },
-            color: kMainColor),
+          text: 'logout',
+          onTap: () {
+            BlocProvider.of<AuthCubit>(context).logout();
+            Navigator.of(context).pop();
+          },
+          color: kMainColor,
+        ),
       ),
     );
   }
