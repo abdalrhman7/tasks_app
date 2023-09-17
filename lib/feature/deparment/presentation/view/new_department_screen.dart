@@ -3,39 +3,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/constants/app_color.dart';
 import 'package:task_app/core/widgets/main_button.dart';
+import 'package:task_app/feature/deparment/business_logic/new_deparment_cubit/new_department_cubit.dart';
 
-import '../../../../core/app_route/router.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/text_style.dart';
 import '../../../../core/function/main_dialog.dart';
 import '../../../../core/utilities/my_validators.dart';
 import '../../../../core/widgets/CustomCircularProgressIndicator.dart';
 import '../../../../core/widgets/defaultTextFormFiled.dart';
-import '../../business_logic/auth_cubit.dart';
 
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+class NewDepartmentScreen extends StatefulWidget {
+  const NewDepartmentScreen({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  State<NewDepartmentScreen> createState() => _NewDepartmentScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _NewDepartmentScreenState extends State<NewDepartmentScreen> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
-  bool keepMeLogin = false;
+  late TextEditingController _nameController;
 
   @override
   void initState() {
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+    _nameController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var cubit = BlocProvider.of<AuthCubit>(context);
+    var cubit = BlocProvider.of<NewDepartmentCubit>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -46,15 +42,16 @@ class _AuthScreenState extends State<AuthScreen> {
               children: [
                 Center(
                   child: Text(
-                    AppStrings.welcomeBack,
+                    AppStrings.newDepartment,
                     style: Style.textStyle30,
                   ),
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  AppStrings.loginToAccessYourAssigned,
+                  AppStrings.createANewDepartment,
                   style: TextStyle(
                     fontSize: 20.sp,
+                    color: kTextColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -65,27 +62,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        buildEmailTextFormFiled(),
-                        SizedBox(height: 20.h),
-                        buildPasswordTextFormFiled(),
-                        SizedBox(height: 20.h),
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: keepMeLogin,
-                              onChanged: (value) {
-                                setState(() {
-                                  keepMeLogin = value!;
-                                });
-                              },
-                            ),
-                            SizedBox(width: 12.w),
-                            Text(
-                              AppStrings.keepMeLoggedIn,
-                              style: Style.textStyle16,
-                            ),
-                          ],
-                        ),
+                        buildNameTextFormFiled(),
                         SizedBox(height: 20.h),
                         buildBlocConsumerMainButton(cubit),
                       ],
@@ -100,45 +77,29 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  Widget buildEmailTextFormFiled() {
+  Widget buildNameTextFormFiled() {
     return DefaultTextFormFiled(
-      controller: _emailController,
-      label: AppStrings.email,
-      hintText: AppStrings.enterYourEmail,
-      validate: (value) => MyValidators.emailValidator(value),
+      controller: _nameController,
+      label: AppStrings.name,
+      validate: (value) => MyValidators.nameValidator(value),
       type: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
     );
   }
 
-  DefaultTextFormFiled buildPasswordTextFormFiled() {
-    return DefaultTextFormFiled(
-      controller: _passwordController,
-      label: AppStrings.password,
-      hintText: AppStrings.enterYourPassword,
-      validate: (value) => MyValidators.passwordValidator(value),
-      type: TextInputType.visiblePassword,
-      textInputAction: TextInputAction.done,
-      isPassword: true,
-    );
-  }
-
-  Widget buildBlocConsumerMainButton(AuthCubit cubit) {
-    return BlocConsumer<AuthCubit, AuthState>(
+  Widget buildBlocConsumerMainButton(NewDepartmentCubit cubit) {
+    return BlocConsumer<NewDepartmentCubit, NewDepartmentState>(
       listener: (context, state) {
-        if (state is AuthFailure) {
+        if (state is NewDepartmentFailure) {
           MainDialog(
             context: context,
             title: 'Error',
             content: state.errMessage,
           ).showAlertDialog();
         }
-        if (state is AuthSuccess) {
-          Navigator.of(context).pushNamed(AppRoutes.homeScreen);
-        }
       },
       builder: (context, state) {
-        if (state is AuthLoading) {
+        if (state is NewDepartmentLoading) {
           return const CustomCircularProgressIndicator();
         }
         return MainButton(
@@ -146,17 +107,16 @@ class _AuthScreenState extends State<AuthScreen> {
             validateAndSubmit(cubit);
           },
           color: kMainColor,
-          text: AppStrings.login,
+          text: AppStrings.create,
         );
       },
     );
   }
 
-  void validateAndSubmit(AuthCubit cubit) {
+  void validateAndSubmit(NewDepartmentCubit cubit) {
     if (_formKey.currentState!.validate()) {
-      cubit.login(
-        email: _emailController.text,
-        password: _passwordController.text,
+      cubit.storeDepartment(
+        name: _nameController.text,
       );
     }
   }

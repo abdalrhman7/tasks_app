@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-
 import '../../../../core/network/api_constent.dart';
 import '../model/user_model.dart';
 
@@ -14,7 +13,6 @@ class WebServices {
         data: {'email': email, 'password': password},
         options: Options(
           headers: {
-            'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
         ));
@@ -28,7 +26,6 @@ class WebServices {
       data: {'token': token},
       options: Options(
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
       ),
