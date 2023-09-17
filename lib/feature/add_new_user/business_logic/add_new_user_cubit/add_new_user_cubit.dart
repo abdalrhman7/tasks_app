@@ -19,6 +19,7 @@ class AddNewUserCubit extends Cubit<AddNewUserState> {
     required int userType,
     required String password,
     required String phone,
+
   }) async {
     emit(AddNewUserLoading());
     try {
@@ -27,9 +28,9 @@ class AddNewUserCubit extends Cubit<AddNewUserState> {
         name: name,
         email: email,
         userType: userType,
+        password: password,
         phone: phone,
         token: token,
-        password: password,
       );
       emit(AddNewUserSuccess());
     } catch (e) {

@@ -8,12 +8,18 @@ class UserRepo {
   Future<void> addNewUser({
     required String name,
     required String email,
+    required int userType,
     required String phone,
     required String password,
-    required int userType,
     required String token,
   }) async {
     userWepServices.addNewUser(
-        name: name, email: email, userType: userType, token: token , password: password , phone: phone);
+      name: name,
+      email: email,
+      userType: userType,
+      token: token,
+      password: password,
+      phone: phone,
+    );
   }
 }

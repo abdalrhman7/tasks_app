@@ -20,8 +20,9 @@ class UserWepServices {
       data: {
         'name': name,
         'email': email,
+        'phone': phone,
+        'password': password,
         'user_type': userType,
-        'password': password
       },
       options: Options(
         headers: {

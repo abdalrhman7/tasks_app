@@ -7,6 +7,7 @@ import 'package:task_app/feature/add_new_user/business_logic/add_new_user_cubit/
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/text_style.dart';
+import '../../../../core/utilities/enum.dart';
 import '../../../../core/utilities/my_validators.dart';
 import '../../../../core/widgets/defaultTextFormFiled.dart';
 import '../widget/radio_button_widget.dart';
@@ -24,6 +25,7 @@ class _AuthScreenState extends State<AddNewUser> {
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
   late TextEditingController _passwordController;
+  UserTypes userType = UserTypes.admin;
 
   @override
   void initState() {
@@ -69,13 +71,83 @@ class _AuthScreenState extends State<AddNewUser> {
                       children: [
                         buildNameTextFormFiled(),
                         SizedBox(height: 20.h),
-                        buildEmailTextFormFiled(),
-                        SizedBox(height: 20.h),
                         buildPhoneTextFormFiled(),
+                        SizedBox(height: 20.h),
+                        buildEmailTextFormFiled(),
                         SizedBox(height: 20.h),
                         buildPasswordTextFormFiled(),
                         SizedBox(height: 20.h),
-                        const RadioButtonsWidget(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all()),
+                              child: Row(
+                                children: [
+                                  Radio<UserTypes>(
+                                    value: UserTypes.admin,
+                                    groupValue: userType,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        userType = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Admin'),
+                                  const SizedBox(
+                                    width: 20,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all()),
+                              child: Row(
+                                children: [
+                                  Radio<UserTypes>(
+                                    value: UserTypes.manager,
+                                    groupValue: userType,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        userType = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Manager'),
+                                  const SizedBox(
+                                    width: 20,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all()),
+                              child: Row(
+                                children: [
+                                  Radio<UserTypes>(
+                                    value: UserTypes.user,
+                                    groupValue: userType,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        userType = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('User'),
+                                  const SizedBox(
+                                    width: 20,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                         SizedBox(height: 20.h),
                         buildBlocConsumerMainButton(cubit),
                       ],
@@ -103,7 +175,7 @@ class _AuthScreenState extends State<AddNewUser> {
   Widget buildEmailTextFormFiled() {
     return DefaultTextFormFiled(
       controller: _emailController,
-      label: AppStrings.phone,
+      label: AppStrings.email,
       validate: (value) => MyValidators.emailValidator(value),
       type: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
@@ -113,7 +185,7 @@ class _AuthScreenState extends State<AddNewUser> {
   Widget buildPhoneTextFormFiled() {
     return DefaultTextFormFiled(
       controller: _phoneController,
-      label: AppStrings.email,
+      label: AppStrings.phone,
       validate: (value) => MyValidators.nameValidator(value),
       type: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
@@ -142,13 +214,18 @@ class _AuthScreenState extends State<AddNewUser> {
   }
 
   void validateAndSubmit(AddNewUserCubit cubit) {
-    if (_formKey.currentState!.validate()) {
-      cubit.addNewUser(
-          email: 'abdo@gmail.com',
-          userType: 0,
-          name: 'ahahahh',
-          password: '12345',
-          phone: '12345');
-    }
+    // if (_formKey.currentState!.validate()) {
+    //
+    // }
+    cubit.addNewUser(
+        name: _nameController.text,
+        email: _emailController.text,
+        phone: _phoneController.text,
+        password: _passwordController.text,
+        userType: (userType == UserTypes.admin)
+            ? 0
+            : (userType == UserTypes.manager)
+                ? 1
+                : 2);
   }
 }
