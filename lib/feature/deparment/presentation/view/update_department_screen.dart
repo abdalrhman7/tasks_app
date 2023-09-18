@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/constants/app_color.dart';
 import 'package:task_app/core/widgets/main_button.dart';
+import 'package:task_app/feature/deparment/data/model/manger_model.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/text_style.dart';
@@ -73,7 +74,8 @@ class _UpdateDepartmentScreenState extends State<UpdateDepartmentScreen> {
                           return DropDownMenuComponent(
                             hint: ' name',
                             items: cubit.departments,
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                            },
                           );
                         }),
                         SizedBox(height: 20.h),

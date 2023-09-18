@@ -5,7 +5,7 @@ import 'package:task_app/feature/deparment/business_logic/new_deparment_cubit/ne
 import '../../../../core/utilities/secure_storage.dart';
 import '../../data/model/department_model.dart';
 import '../../data/model/manger_model.dart';
-import '../../data/repo/repo.dart';
+import '../../data/repo/department_repo.dart';
 
 part 'update_department_state.dart';
 

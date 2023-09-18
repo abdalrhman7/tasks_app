@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/app_route/router.dart';
+import '../app_route/router.dart';
+import '../../feature/auth/business_logic/auth_cubit.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -13,10 +15,6 @@ class AppDrawer extends StatelessWidget {
         children: [
           AppBar(
             centerTitle: true,
-            title: const Text(
-              'drawer',
-              style: TextStyle(color: Colors.white),
-            ),
             automaticallyImplyLeading: false,
           ),
           SizedBox(height: 8.h),
@@ -47,8 +45,8 @@ class AppDrawer extends StatelessWidget {
             thickness: 2,
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed(AppRoutes.addNewUserScreen),
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.addNewUserScreen),
             child: const ListTile(
               title: Text(
                 'add new user',
@@ -60,8 +58,8 @@ class AppDrawer extends StatelessWidget {
             thickness: 2,
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed(AppRoutes.updateUserScreen),
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.updateUserScreen),
             child: const ListTile(
               title: Text(
                 'update user',
@@ -72,6 +70,18 @@ class AppDrawer extends StatelessWidget {
             height: 10,
             thickness: 2,
           ),
+           GestureDetector(
+             onTap: () => BlocProvider.of<AuthCubit>(context).logout(),
+             child: const ListTile(
+              title: Text(
+                'log out',
+              ),
+          ),
+           ),
+          const Divider(
+            height: 10,
+            thickness: 2,
+          )
         ],
       ),
     );

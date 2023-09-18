@@ -1,20 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:task_app/core/app_route/router.dart';
-import 'package:task_app/feature/add_new_user/data/repo/user_repo.dart';
-import 'package:task_app/feature/add_new_user/presentation/view/add_new_user_screen.dart';
-import 'package:task_app/feature/add_new_user/presentation/view/update_user_screen.dart';
-import 'package:task_app/feature/auth/business_logic/auth_cubit.dart';
 import 'package:task_app/feature/deparment/business_logic/new_deparment_cubit/new_department_cubit.dart';
 import 'package:task_app/feature/deparment/business_logic/update_deparment_cubit/update_department_cubit.dart';
 import 'package:task_app/feature/deparment/presentation/view/new_department_screen.dart';
-import 'package:task_app/feature/home_screen/view/screen/HomeScreen.dart';
 
-import '../../feature/add_new_user/business_logic/add_new_user_cubit/add_new_user_cubit.dart';
-import '../../feature/auth/data/repo/auth_repo.dart';
+import '../../feature/add_and_update_user/business_logic/add_new_user_cubit/add_new_user_cubit.dart';
+import '../../feature/add_and_update_user/business_logic/get_all_user_cubit/get_all_user_cubit.dart';
+import '../../feature/add_and_update_user/business_logic/update_user_cubit/update_user_cubit.dart';
+import '../../feature/add_and_update_user/data/repo/user_repo.dart';
+import '../../feature/add_and_update_user/presentation/view/add_new_user_screen.dart';
+import '../../feature/add_and_update_user/presentation/view/update_user_screen.dart';
 import '../../feature/auth/presentation/view/auth_screen.dart';
-import '../../feature/deparment/data/repo/repo.dart';
+import '../../feature/deparment/data/repo/department_repo.dart';
 import '../../feature/deparment/presentation/view/update_department_screen.dart';
+import '../../feature/user_page/view/screen/user-page.dart';
+import '../../feature/user_tasks/view/screen/user_tasks_screen.dart';
 import '../../injection.dart';
 import '../utilities/secure_storage.dart';
 
@@ -26,9 +27,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings: settings,
       );
 
-    case AppRoutes.homeScreen:
+    case AppRoutes.userPage:
       return MaterialPageRoute(
-        builder: (_) => const HomeScreen(),
+        builder: (_) => const UserPage(),
+        settings: settings,
+      );
+
+    case AppRoutes.userTaskScreen:
+      return MaterialPageRoute(
+        builder: (_) => const UserTasksScreen(),
         settings: settings,
       );
 
@@ -57,7 +64,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AppRoutes.addNewUserScreen:
       return MaterialPageRoute(
         builder: (_) => BlocProvider(
-          create: (context) => AddNewUserCubit(getIt.get<UserRepo>(), getIt.get<SecureStorage>()),
+          create: (context) => AddNewUserCubit(
+              getIt.get<UserRepo>(), getIt.get<SecureStorage>()),
           child: const AddNewUser(),
         ),
         settings: settings,
@@ -65,7 +73,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case AppRoutes.updateUserScreen:
       return MaterialPageRoute(
-        builder: (_) => const UpdateUserScreen(),
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider<GetAllUserCubit>(
+              create: (BuildContext context) => GetAllUserCubit(getIt.get<UserRepo>(), getIt.get<SecureStorage>() , getIt.get<DepartmentRepo>() )..getAllUser()..getAllManger(),
+            ),
+            BlocProvider<UpdateUserCubit>(
+              create: (BuildContext context) => UpdateUserCubit(getIt.get<UserRepo>(), getIt.get<SecureStorage>()),
+            ),
+          ],
+
+          child: const UpdateUserScreen(),
+        ),
         settings: settings,
       );
 

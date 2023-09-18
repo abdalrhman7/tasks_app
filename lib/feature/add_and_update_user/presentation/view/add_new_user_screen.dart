@@ -3,14 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/constants/app_color.dart';
 import 'package:task_app/core/widgets/main_button.dart';
-import 'package:task_app/feature/add_new_user/business_logic/add_new_user_cubit/add_new_user_cubit.dart';
+
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/text_style.dart';
+import '../../../../core/function/main_dialog.dart';
 import '../../../../core/utilities/enum.dart';
 import '../../../../core/utilities/my_validators.dart';
 import '../../../../core/widgets/defaultTextFormFiled.dart';
-import '../widget/radio_button_widget.dart';
+import '../../business_logic/add_new_user_cubit/add_new_user_cubit.dart';
+import '../../data/model/add_user_model.dart';
 
 class AddNewUser extends StatefulWidget {
   const AddNewUser({super.key});
@@ -204,28 +206,48 @@ class _AuthScreenState extends State<AddNewUser> {
   }
 
   Widget buildBlocConsumerMainButton(AddNewUserCubit cubit) {
-    return MainButton(
-      onTap: () {
-        validateAndSubmit(cubit);
+    return BlocListener<AddNewUserCubit, AddNewUserState>(
+      listener: (context, state) {
+        if (state is AddNewUserSuccess) {
+          MainDialog(
+            context: context,
+            title: 'success',
+            content: 'User added successfully',
+          ).showAlertDialog();
+        }
+        if (state is AddNewUserFailure) {
+          MainDialog(
+            context: context,
+            title: 'Error',
+            content: state.errMessage,
+          ).showAlertDialog();
+        }
       },
-      color: kMainColor,
-      text: AppStrings.create,
+      child: MainButton(
+        onTap: () {
+          validateAndSubmit(cubit);
+        },
+        color: kMainColor,
+        text: AppStrings.create,
+      ),
     );
   }
 
   void validateAndSubmit(AddNewUserCubit cubit) {
-    // if (_formKey.currentState!.validate()) {
-    //
-    // }
-    cubit.addNewUser(
+    if (_formKey.currentState!.validate()) {
+      AddUserModel addUserModel = AddUserModel(
         name: _nameController.text,
         email: _emailController.text,
-        phone: _phoneController.text,
         password: _passwordController.text,
+        phone: _phoneController.text,
         userType: (userType == UserTypes.admin)
             ? 0
             : (userType == UserTypes.manager)
                 ? 1
-                : 2);
+                : 2,
+      );
+      print('${addUserModel.phone}+++++++++++++++++++++++++++++');
+      cubit.addNewUser(addUserModel: addUserModel);
+    }
   }
 }

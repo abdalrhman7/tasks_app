@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/utilities/secure_storage.dart';
-import '../../data/repo/repo.dart';
+import '../../data/repo/department_repo.dart';
 
 part 'new_department_state.dart';
 

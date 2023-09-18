@@ -32,7 +32,7 @@ class DropDownMenuComponent extends StatelessWidget {
       onChanged: onChanged,
       items: items.map<DropdownMenuItem<String>>((value) {
         return DropdownMenuItem<String>(
-          value: value.id!.toString(),
+          value: value!.id!.toString(),
           child: Text(value.name!),
         );
       }).toList(),

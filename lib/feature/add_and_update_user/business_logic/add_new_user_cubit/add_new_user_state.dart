@@ -7,7 +7,8 @@ class AddNewUserInitial extends AddNewUserState {}
 
 class AddNewUserLoading extends AddNewUserState {}
 
-class AddNewUserSuccess extends AddNewUserState {}
+class AddNewUserSuccess extends AddNewUserState {
+}
 
 class AddNewUserFailure extends AddNewUserState {
   final String errMessage;

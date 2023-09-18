@@ -1,5 +1,4 @@
-import '../model/manger_model.dart';
-import '../web_services/wep_services.dart';
+import '../web_services/department_wep_services.dart';
 
 class DepartmentRepo {
   final DepartmentWebServices departmentWebServices;

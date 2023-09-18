@@ -5,45 +5,44 @@ import 'constants/text_style.dart';
 
 ThemeData themeData(BuildContext context) {
   return ThemeData(
-    scaffoldBackgroundColor: const Color(0xFFE5E5E5),
+    scaffoldBackgroundColor: const Color(0xffF3FAF9),
     primaryColor: Colors.red,
     appBarTheme: AppBarTheme(
-        centerTitle: true,
-        elevation: 0.9,
-        backgroundColor: Colors.white,
+        elevation: 0.0,
+        backgroundColor: const Color(0xffF3FAF9),
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
         titleTextStyle: Style.textStyle18.copyWith(color: Colors.black)),
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: Theme.of(context).textTheme.titleMedium,
-      focusedBorder: OutlineInputBorder(
+      focusedBorder: const OutlineInputBorder(
        // borderRadius: BorderRadius.circular(2.0),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: Colors.grey,
         ),
       ),
-      disabledBorder: OutlineInputBorder(
+      disabledBorder: const OutlineInputBorder(
         //borderRadius: BorderRadius.circular(16.0),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: Colors.grey,
         ),
       ),
-      enabledBorder: OutlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
        // borderRadius: BorderRadius.circular(16.0),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: Colors.grey,
         ),
       ),
-      errorBorder: OutlineInputBorder(
+      errorBorder: const OutlineInputBorder(
        // borderRadius: BorderRadius.circular(16.0),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: Colors.red,
         ),
       ),
-      focusedErrorBorder: OutlineInputBorder(
+      focusedErrorBorder: const OutlineInputBorder(
         //borderRadius: BorderRadius.circular(16.0),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: Colors.red,
         ),
       ),
