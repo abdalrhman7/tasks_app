@@ -4,7 +4,6 @@ import 'package:task_app/feature/auth/data/repo/auth_repo.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/utilities/secure_storage.dart';
-import '../data/model/user_model.dart';
 
 part 'auth_state.dart';
 
@@ -34,9 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
     await authRepo.logout(
       token,
     );
+    secureStorage.deleteSecureData('token');
   }
 
-  void saveUserToken(User user) async {
-    await storage.write(key: 'token', value: user.token);
-  }
 }

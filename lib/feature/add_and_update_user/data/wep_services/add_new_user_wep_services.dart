@@ -33,22 +33,17 @@ class UserWepServices {
   }
 
   Future<void> updateUser({
-    required String name,
-    required String email,
-    required String phone,
-    required String password,
-    required int userType,
-    //required int departmentId,
+    required UpdateUserModel updateUserModel,
     required String token,
   }) async {
     var response = await dio.post(
       ApiConstants.updateUser,
       data: {
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'password': password,
-        'user_type': userType,
+        'name': updateUserModel.name,
+        'email': updateUserModel.email,
+        'phone': updateUserModel.phone,
+        'password': updateUserModel.password,
+        'user_type': updateUserModel.userType,
         'user_status': 0,
         'department_id': 1,
       },

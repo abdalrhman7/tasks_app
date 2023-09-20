@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../../../core/utilities/secure_storage.dart';
-import '../../../deparment/data/model/manger_model.dart';
-import '../../../deparment/data/repo/department_repo.dart';
+import '../../../departmen/data/model/manger_model.dart';
+import '../../../departmen/data/repo/department_repo.dart';
 import '../../data/model/get_user_model.dart';
 import '../../data/repo/user_repo.dart';
 
@@ -23,7 +22,7 @@ class GetAllUserCubit extends Cubit<GetAllUserState> {
     String? token = await secureStorage.readSecureData('token');
     await userRepo
         .getAllUser(
-      token: token,
+      token: token!,
     )
         .then(
           (value) {
@@ -41,7 +40,7 @@ class GetAllUserCubit extends Cubit<GetAllUserState> {
     String? token = await secureStorage.readSecureData('token');
     await departmentRepo
         .getAllManger(
-      token: token,
+      token: token!,
     )
         .then(
           (value) {

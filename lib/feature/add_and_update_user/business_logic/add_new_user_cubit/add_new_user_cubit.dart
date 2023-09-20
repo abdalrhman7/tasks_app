@@ -23,7 +23,7 @@ class AddNewUserCubit extends Cubit<AddNewUserState> {
       String? token = await secureStorage.readSecureData('token');
       await userRepo.addNewUser(
         addUserModel: addUserModel,
-        token: token,
+        token: token!,
       );
       emit(AddNewUserSuccess());
     } catch (e) {

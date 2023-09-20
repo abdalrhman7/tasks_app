@@ -22,23 +22,12 @@ class UserRepo {
   }
 
   Future<void> updateUser({
-    required String name,
-    required String email,
-    required String phone,
-    required String password,
-    required int userType,
-    //required int departmentId,
+    required UpdateUserModel updateUserModel,
     required String token,
   }) async {
     userWepServices.updateUser(
-      name: name,
-      email: email,
-      phone: phone,
-      password: password,
-      userType: userType,
-    //  departmentId: departmentId,
+      updateUserModel: updateUserModel,
       token: token,
-
     );
   }
 }

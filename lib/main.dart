@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/app_route/router.dart';
-
+import 'package:task_app/feature/departmen/business_logic/get_all_deparment_cubit/get_all_department_cubit.dart';
+import 'package:task_app/feature/departmen/data/repo/department_repo.dart';
 
 import 'core/app_route/routes.dart';
 import 'core/theme_data.dart';
@@ -35,12 +36,16 @@ class MyApp extends StatelessWidget {
               create: (context) =>
                   AuthCubit(getIt.get<AuthRepo>(), getIt.get<SecureStorage>()),
             ),
+            BlocProvider<GetAllDepartmentCubit>(
+              create: (context) => GetAllDepartmentCubit(
+                  getIt.get<DepartmentRepo>(), getIt.get<SecureStorage>())..getAllDepartment(),
+            ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: themeData(context),
             onGenerateRoute: generateRoute,
-           // initialRoute: AppRoutes.userTaskScreen,
+            //initialRoute: AppRoutes.singleTaskScreen,
           ),
         );
       },

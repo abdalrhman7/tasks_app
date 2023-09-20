@@ -13,11 +13,7 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          AppBar(
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-          ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 42.h),
           GestureDetector(
             onTap: () =>
                 Navigator.of(context).pushNamed(AppRoutes.departmentScreen),
@@ -70,18 +66,44 @@ class AppDrawer extends StatelessWidget {
             height: 10,
             thickness: 2,
           ),
-           GestureDetector(
-             onTap: () => BlocProvider.of<AuthCubit>(context).logout(),
-             child: const ListTile(
+          GestureDetector(
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.userTaskScreen),
+            child: const ListTile(
               title: Text(
-                'log out',
+                'user task',
               ),
+            ),
           ),
-           ),
           const Divider(
             height: 10,
             thickness: 2,
-          )
+          ),
+          GestureDetector(
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.addNewTaskScreen),
+            child: const ListTile(
+              title: Text(
+                'Add New Task',
+              ),
+            ),
+          ),
+          const Divider(
+            height: 10,
+            thickness: 2,
+          ),
+          GestureDetector(
+            onTap: () {
+              BlocProvider.of<AuthCubit>(context).logout();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoutes.authScreen, (route) => false);
+            },
+            child: const ListTile(
+              title: Text(
+                'log out',
+              ),
+            ),
+          ),
         ],
       ),
     );

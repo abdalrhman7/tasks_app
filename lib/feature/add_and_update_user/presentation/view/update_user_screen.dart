@@ -11,11 +11,10 @@ import '../../../../core/function/main_dialog.dart';
 import '../../../../core/utilities/enum.dart';
 import '../../../../core/utilities/my_validators.dart';
 import '../../../../core/widgets/defaultTextFormFiled.dart';
-import '../../../deparment/presentation/widgets/drop_down.dart';
+import '../../../../core/widgets/drop_down.dart';
 import '../../business_logic/add_new_user_cubit/add_new_user_cubit.dart';
 import '../../business_logic/get_all_user_cubit/get_all_user_cubit.dart';
 import '../../business_logic/update_user_cubit/update_user_cubit.dart';
-import '../widget/radio_button_widget.dart';
 
 class UpdateUserScreen extends StatefulWidget {
   const UpdateUserScreen({super.key});
@@ -27,17 +26,28 @@ class UpdateUserScreen extends StatefulWidget {
 class _AuthScreenState extends State<UpdateUserScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController;
-  late TextEditingController _nameController;
   late TextEditingController _phoneController;
   late TextEditingController _passwordController;
-  UserTypes userType = UserTypes.admin;
   String? departmentId;
-  String? name = 'ahmed';
+  String name = 'hassan';
+
+  UserTypes userType = UserTypes.admin;
+  var initValue = UserTypes.admin;
+  UserTypes taskStatus = UserTypes.admin;
+  List usersList = [
+    'Admin',
+    'Manager',
+    'User',
+  ];
+  List<UserTypes> usersTypesList = [
+    UserTypes.admin,
+    UserTypes.manager,
+    UserTypes.user,
+  ];
 
   @override
   void initState() {
     _emailController = TextEditingController();
-    _nameController = TextEditingController();
     _phoneController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
@@ -79,8 +89,8 @@ class _AuthScreenState extends State<UpdateUserScreen> {
                       children: [
                         BlocConsumer<GetAllUserCubit, GetAllUserState>(
                             listener: (context, state) {
-                              // TODO: implement listener
-                            }, builder: (context, state) {
+                          // TODO: implement listener
+                        }, builder: (context, state) {
                           if (state is AddNewUserLoading) {
                             return const CircularProgressIndicator();
                           }
@@ -98,93 +108,39 @@ class _AuthScreenState extends State<UpdateUserScreen> {
                         buildPasswordTextFormFiled(),
                         SizedBox(height: 18.h),
                         BlocConsumer<GetAllUserCubit, GetAllUserState>(
-                            listener: (context, state) {
-                              // TODO: implement listener
-                            }, builder: (context, state) {
-                          if (state is GetAllUserLoading) {
-                            return const CircularProgressIndicator();
-                          }
-                          return DropDownMenuComponent(
-                            hint: 'Department name',
-                            items: getAllUserCubit.mangers,
-                            onChanged: (value) {
-                              departmentId = value;
-                              print(
-                                  '${departmentId}666666666666666666666666666666666');
-                            },
-                          );
-                        }),
+                          listener: (context, state) {
+                            // TODO: implement listener
+                          },
+                          builder: (context, state) {
+                            if (state is GetAllUserLoading) {
+                              return const CircularProgressIndicator();
+                            }
+                            return DropDownMenuComponent(
+                              hint: 'Department name',
+                              items: getAllUserCubit.mangers,
+                              onChanged: (value) {
+                                departmentId = value;
+                                print(
+                                    '${departmentId}666666666666666666666666666666666');
+                              },
+                            );
+                          },
+                        ),
                         SizedBox(height: 18.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all()),
-                              child: Row(
-                                children: [
-                                  Radio<UserTypes>(
-                                    value: UserTypes.admin,
-                                    groupValue: userType,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        userType = value!;
-                                      });
-                                    },
-                                  ),
-                                  const Text('Admin'),
-                                  const SizedBox(
-                                    width: 20,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all()),
-                              child: Row(
-                                children: [
-                                  Radio<UserTypes>(
-                                    value: UserTypes.manager,
-                                    groupValue: userType,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        userType = value!;
-                                      });
-                                    },
-                                  ),
-                                  const Text('Manager'),
-                                  const SizedBox(
-                                    width: 20,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all()),
-                              child: Row(
-                                children: [
-                                  Radio<UserTypes>(
-                                    value: UserTypes.user,
-                                    groupValue: userType,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        userType = value!;
-                                      });
-                                    },
-                                  ),
-                                  const Text('User'),
-                                  const SizedBox(
-                                    width: 20,
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                        GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 120,
+                            childAspectRatio: 8 / 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 4,
+                          ),
+                          shrinkWrap: true,
+                          itemCount: 3,
+                          itemBuilder: (context, index) {
+                            return buildUserTypeRadioButtons(
+                                usersList[index], usersTypesList[index]);
+                          },
                         ),
                         SizedBox(height: 18.h),
                         buildBlocConsumerMainButton(updateUserCubit),
@@ -196,6 +152,28 @@ class _AuthScreenState extends State<UpdateUserScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildUserTypeRadioButtons(String title, UserTypes userTypes) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6), border: Border.all()),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Radio<UserTypes>(
+            value: initValue,
+            groupValue: userTypes,
+            onChanged: (value) {
+              setState(() {
+                initValue = userTypes!;
+              });
+            },
+          ),
+          Text(title),
+        ],
       ),
     );
   }
@@ -231,17 +209,6 @@ class _AuthScreenState extends State<UpdateUserScreen> {
     );
   }
 
-  // Widget departmentNameTextFormFiled() {
-  //   return DefaultTextFormFiled(
-  //     controller: _passwordController,
-  //     label: AppStrings.departmentName,
-  //     validate: (value) => MyValidators.passwordValidator(value),
-  //     type: TextInputType.visiblePassword,
-  //     textInputAction: TextInputAction.done,
-  //     isPassword: true,
-  //   );
-  // }
-
   Widget buildBlocConsumerMainButton(UpdateUserCubit cubit) {
     return BlocConsumer<UpdateUserCubit, UpdateUserState>(
       listener: (context, state) {
@@ -249,7 +216,7 @@ class _AuthScreenState extends State<UpdateUserScreen> {
           MainDialog(
             context: context,
             title: 'success',
-            content: 'User added successfully',
+            content: 'User Update successfully',
           ).showAlertDialog();
         }
         if (state is UpdateUserFailure) {
@@ -266,7 +233,7 @@ class _AuthScreenState extends State<UpdateUserScreen> {
             validateAndSubmit(cubit);
           },
           color: kMainColor,
-          text: AppStrings.create,
+          text: AppStrings.update,
         );
       },
     );
@@ -274,29 +241,20 @@ class _AuthScreenState extends State<UpdateUserScreen> {
 
   void validateAndSubmit(UpdateUserCubit cubit) {
     if (_formKey.currentState!.validate()) {
-      UpdateUserModel addUserModel = UpdateUserModel(
-        name: _nameController.text,
+      UpdateUserModel updateUserModel = UpdateUserModel(
+        name: name,
         email: _emailController.text,
         password: _passwordController.text,
         phone: _phoneController.text,
         userType: (userType == UserTypes.admin)
             ? 0
             : (userType == UserTypes.manager)
-            ? 1
-            : 2,
+                ? 1
+                : 2,
       );
-      print('${addUserModel.phone}+++++++++++++++++++++++++++++');
+      print('${updateUserModel.phone}+++++++++++++++++++++++++++++');
       cubit.updateUser(
-        name: name!,
-        email: _emailController.text,
-        password: _passwordController.text,
-        phone: _phoneController.text,
-        // departmentId: departmentId!,
-        userType: (userType == UserTypes.admin)
-            ? 0
-            : (userType == UserTypes.manager)
-            ? 1
-            : 2,
+        updateUserModel: updateUserModel,
       );
     }
   }

@@ -7,8 +7,8 @@ class SecureStorage {
     await storage.write(key: key, value: value);
   }
 
-  Future<String> readSecureData(String key) async {
-    String value = await storage.read(key: key) ?? 'No Data found';
+  Future<String?>? readSecureData(String key) async {
+    String? value = await storage.read(key: key);
     return value;
   }
 

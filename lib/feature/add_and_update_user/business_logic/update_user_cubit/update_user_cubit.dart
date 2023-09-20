@@ -14,25 +14,14 @@ class UpdateUserCubit extends Cubit<UpdateUserState> {
   final SecureStorage secureStorage;
 
   Future<void> updateUser({
-    required String name,
-    required String email,
-    required String phone,
-    required String password,
-    //required int departmentId,
-    required int userType,
+    required UpdateUserModel updateUserModel,
   }) async {
     emit(UpdateUserLoading());
     try {
       String? token = await secureStorage.readSecureData('token');
       await userRepo.updateUser(
-        name: name,
-        email: email,
-        phone: phone,
-        password: password,
-        userType: userType,
-        //departmentId: departmentId,
-        token: token,
-
+        updateUserModel: updateUserModel,
+        token: token!,
       );
       emit(UpdateUserSuccess());
     } catch (e) {

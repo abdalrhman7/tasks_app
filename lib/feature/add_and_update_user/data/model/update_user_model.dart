@@ -1,9 +1,9 @@
 class UpdateUserModel {
   final String name;
   final String email;
-  final int userType;
-  final String password;
   final String phone;
+  final String password;
+  final int userType;
   //final int userStatus;
 
   UpdateUserModel({
