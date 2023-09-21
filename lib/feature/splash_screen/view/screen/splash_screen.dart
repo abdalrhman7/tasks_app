@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     FlutterSecureStorage flutterSecureStorage = const FlutterSecureStorage();
     flutterSecureStorage.read(key: 'token').then((value) {
       if (value != null) {
-        Navigator.pushReplacementNamed(context, AppRoutes.getAllDepartmentScreen);
+        Navigator.pushReplacementNamed(context, AppRoutes.homeScreen);
       } else {
         Navigator.pushReplacementNamed(context, AppRoutes.authScreen);
       }

@@ -1,4 +1,4 @@
-import '../../../departmen/data/model/department_model.dart';
+import '../../../home_screen/data/model/department_model.dart';
 import 'creator.dart';
 
 class TaskModel {

@@ -7,21 +7,6 @@ class DepartmentWebServices {
 
   DepartmentWebServices(this.dio);
 
-  Future<void> storeDepartment(
-      {required String name, required String token}) async {
-    var response = await dio.post(
-      ApiConstants.storeDepartment,
-      data: {'name': name},
-      options: Options(
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      ),
-    );
-    print(response.data);
-  }
-
   Future<dynamic> getAllManger({required String token}) async {
     var response = await dio.get(
       ApiConstants.getAllManger,
@@ -37,9 +22,11 @@ class DepartmentWebServices {
     return response;
   }
 
-  Future<dynamic> getAllDepartments({required String token}) async {
-    var response = await dio.get(
-      ApiConstants.getAllDepartment,
+  Future<void> storeDepartment(
+      {required String name, required String token}) async {
+    var response = await dio.post(
+      ApiConstants.storeDepartment,
+      data: {'name': name},
       options: Options(
         headers: {
           'Accept': 'application/json',
@@ -48,10 +35,7 @@ class DepartmentWebServices {
       ),
     );
     print(response.data);
-
-    return response;
   }
-
 
   Future<void> updateDepartment(
       {required String name,
@@ -69,13 +53,4 @@ class DepartmentWebServices {
     );
     print(response.data);
   }
-
-  // List<Manger> getMangersList(Map<String, dynamic> data) {
-  //   List<Manger> mangers = [];
-  //
-  //   for (var manger in data['data']) {
-  //     mangers.add(Manger.fromJson(manger));
-  //   }
-  //   return mangers;
-  // }
 }

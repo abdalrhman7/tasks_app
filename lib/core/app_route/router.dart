@@ -1,6 +1,6 @@
 class AppRoutes {
   static const String authScreen = '/auth';
-  static const String getAllDepartmentScreen = '/get_all_department_screen';
+  static const String homeScreen = '/home_screen';
   static const String userTaskScreen = '/user_task_screen';
   static const String departmentScreen = '/department_screen';
   static const String updateDepartmentScreen = '/update_department_screen';

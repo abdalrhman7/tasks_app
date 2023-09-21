@@ -1,4 +1,5 @@
 
+import '../add_task_model/add_task_model.dart';
 import '../web_services/add_task_wep_services.dart';
 
 class AddTaskRepo {
@@ -7,19 +8,11 @@ class AddTaskRepo {
   AddTaskRepo(this.addTaskWepServices);
 
   Future<void> addTask({
-    required String name,
-    required String description,
-    required String employeeId,
-    required String startDate,
-    required String endDate,
+    required AddTaskModel addTaskModel,
     required String token,
   }) async {
     addTaskWepServices.addTask(
-      name: name,
-      description: description,
-      employeeId: employeeId,
-      startDate: startDate,
-      endDate: endDate,
+      addTaskModel: addTaskModel,
       token: token,
     );
   }

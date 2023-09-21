@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_app/feature/departmen/data/model/department_model.dart';
+import 'package:task_app/feature/home_screen/data/model/department_model.dart';
 import 'package:task_app/feature/departmen/presentation/widgets/user_card.dart';
 
 

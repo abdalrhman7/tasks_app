@@ -4,8 +4,8 @@ import 'package:task_app/core/app_route/router.dart';
 import 'package:task_app/feature/add_new_task/data/repo/add_task_repo.dart';
 
 import 'package:task_app/feature/splash_screen/view/screen/splash_screen.dart';
-import 'package:task_app/feature/user_tasks_and_single_task/business_logic/get_all_task_cubit/get_all_task_cubit.dart';
-import 'package:task_app/feature/user_tasks_and_single_task/data/repo/get_all_task_repo.dart';
+import 'package:task_app/feature/user_tasks_and_single_task/business_logic/delete_task_cubit/delete_task_cubit.dart';
+import 'package:task_app/feature/user_tasks_and_single_task/data/repo/get_and_delete_task_repo.dart';
 
 import '../../feature/add_and_update_user/business_logic/add_new_user_cubit/add_new_user_cubit.dart';
 import '../../feature/add_and_update_user/business_logic/get_all_user_cubit/get_all_user_cubit.dart';
@@ -16,13 +16,15 @@ import '../../feature/add_and_update_user/presentation/view/update_user_screen.d
 import '../../feature/add_new_task/business_logic/get_all_user_cubit/add_task_cubit.dart';
 import '../../feature/add_new_task/presentation/view/add_new_task_screen.dart';
 import '../../feature/auth/presentation/view/auth_screen.dart';
-import '../../feature/departmen/business_logic/get_all_deparment_cubit/get_all_department_cubit.dart';
 import '../../feature/departmen/business_logic/new_deparment_cubit/new_department_cubit.dart';
 import '../../feature/departmen/business_logic/update_deparment_cubit/update_department_cubit.dart';
 import '../../feature/departmen/data/repo/department_repo.dart';
 import '../../feature/departmen/presentation/view/new_department_screen.dart';
 import '../../feature/departmen/presentation/view/update_department_screen.dart';
-import '../../feature/departmen/presentation/view/get_all_department_screen.dart';
+import '../../feature/home_screen/business_logic/home_screen_cubit.dart';
+import '../../feature/home_screen/data/home_screen_repo/home_screen_repo.dart';
+import '../../feature/home_screen/presentation/view/home_screen.dart';
+import '../../feature/user_tasks_and_single_task/business_logic/get_all_task_cubit/get_all_task_cubit.dart';
 import '../../feature/user_tasks_and_single_task/view/screen/single_task_screen.dart';
 import '../../feature/user_tasks_and_single_task/view/screen/user_tasks_screen.dart';
 import '../../injection.dart';
@@ -36,13 +38,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings: settings,
       );
 
-    case AppRoutes.getAllDepartmentScreen:
+    case AppRoutes.homeScreen:
       return MaterialPageRoute(
-        builder: (_) => BlocProvider<GetAllDepartmentCubit>(
-          create: (context) => GetAllDepartmentCubit(
-              getIt.get<DepartmentRepo>(), getIt.get<SecureStorage>()),
-          child: const GetAllDepartmentScreen(),
-        ),
+        builder: (context) => const HomeScreen(),
         settings: settings,
       );
 
@@ -66,7 +64,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ..getAllManger(),
             ),
             BlocProvider.value(
-                value: BlocProvider.of<GetAllDepartmentCubit>(_),
+              value: BlocProvider.of<HomeScreenCubit>(_),
             ),
           ],
           child: const UpdateDepartmentScreen(),
@@ -128,9 +126,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case AppRoutes.userTaskScreen:
       return MaterialPageRoute(
-        builder: (_) => BlocProvider(
-          create: (context) => GetAllTaskCubit(
-              getIt.get<GetAllTaskRepo>(), getIt.get<SecureStorage>()),
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider<GetAllTaskCubit>(
+              create: (context) => GetAllTaskCubit(
+                  getIt.get<GetAndDeleteTaskRepo>(),
+                  getIt.get<SecureStorage>()),
+            ),
+            BlocProvider<DeleteTaskCubit>(
+              create: (context) => DeleteTaskCubit(
+                getIt.get<GetAndDeleteTaskRepo>(),
+                getIt.get<SecureStorage>(),
+              ),
+            )
+          ],
           child: const UserTasksScreen(),
         ),
         settings: settings,

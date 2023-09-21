@@ -10,87 +10,117 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userType = BlocProvider.of<AuthCubit>(context).getUserType();
+
     return Drawer(
       child: Column(
         children: [
           SizedBox(height: 42.h),
-          GestureDetector(
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.departmentScreen),
-            child: const ListTile(
-              title: Text(
-                'New Department',
+          if (userType == 'admin' || userType == 'manager')
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.departmentScreen),
+                child: const ListTile(
+                  title: Text(
+                    'New Department',
+                  ),
+                ),
               ),
-            ),
-          ),
-          const Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed(AppRoutes.updateDepartmentScreen),
-            child: const ListTile(
-              title: Text(
-                'Update Department',
+              const Divider(
+                height: 10,
+                thickness: 2,
               ),
-            ),
+            ],
           ),
-          const Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          GestureDetector(
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.addNewUserScreen),
-            child: const ListTile(
-              title: Text(
-                'add new user',
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.of(context)
+                    .pushNamed(AppRoutes.updateDepartmentScreen),
+                child: const ListTile(
+                  title: Text(
+                    'Update Department',
+                  ),
+                ),
               ),
-            ),
-          ),
-          const Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          GestureDetector(
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.updateUserScreen),
-            child: const ListTile(
-              title: Text(
-                'update user',
+              const Divider(
+                height: 10,
+                thickness: 2,
               ),
-            ),
+            ],
           ),
-          const Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          GestureDetector(
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.userTaskScreen),
-            child: const ListTile(
-              title: Text(
-                'user task',
+          if (userType == 'admin' || userType == 'manager')
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.addNewUserScreen),
+                child: const ListTile(
+                  title: Text(
+                    'add new user',
+                  ),
+                ),
               ),
-            ),
-          ),
-          const Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          GestureDetector(
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.addNewTaskScreen),
-            child: const ListTile(
-              title: Text(
-                'Add New Task',
+              const Divider(
+                height: 10,
+                thickness: 2,
               ),
-            ),
+            ],
           ),
-          const Divider(
-            height: 10,
-            thickness: 2,
+          if (userType == 'admin' || userType == 'manager')
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.updateUserScreen),
+                child: const ListTile(
+                  title: Text(
+                    'update user',
+                  ),
+                ),
+              ),
+              const Divider(
+                height: 10,
+                thickness: 2,
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.userTaskScreen),
+                child: const ListTile(
+                  title: Text(
+                    'user task',
+                  ),
+                ),
+              ),
+              const Divider(
+                height: 10,
+                thickness: 2,
+              ),
+            ],
+          ),
+          if (userType == 'admin' || userType == 'manager')
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.addNewTaskScreen),
+                child: const ListTile(
+                  title: Text(
+                    'Add New Task',
+                  ),
+                ),
+              ),
+              const Divider(
+                height: 10,
+                thickness: 2,
+              ),
+            ],
           ),
           GestureDetector(
             onTap: () {

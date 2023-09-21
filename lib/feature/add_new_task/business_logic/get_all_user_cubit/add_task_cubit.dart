@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:task_app/feature/add_new_task/data/add_task_model/add_task_model.dart';
 import 'package:task_app/feature/add_new_task/data/repo/add_task_repo.dart';
 
 import '../../../../core/utilities/secure_storage.dart';
@@ -14,21 +15,13 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   final SecureStorage secureStorage;
 
   Future<void> addTask({
-    required String name,
-    required String description,
-    required String employeeId,
-    required String startDate,
-    required String endDate,
+    required AddTaskModel addTaskModel,
   }) async {
     emit(AddTaskLoading());
     try {
       String? token = await secureStorage.readSecureData('token');
       await addTaskRepo.addTask(
-        name: name,
-        description: description,
-        employeeId: employeeId,
-        startDate: startDate,
-        endDate: endDate,
+        addTaskModel: addTaskModel,
         token: token!,
       );
       emit(AddTaskSuccess());

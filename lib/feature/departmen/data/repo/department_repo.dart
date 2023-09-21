@@ -14,9 +14,6 @@ class DepartmentRepo {
     return await departmentWebServices.getAllManger(token: token);
   }
 
-  Future<dynamic> getAllDepartments({required String token}) async {
-    return await departmentWebServices.getAllDepartments(token: token);
-  }
 
   Future<void> updateDepartment(
       {required String name,

@@ -11,4 +11,5 @@ class ApiConstants{
   static const updateUser = '$baseUrl/user/update/5';
   static const addTask = '$baseUrl/task/store';
   static const getAllTask = '$baseUrl/task/index';
+  static const deleteTask = '$baseUrl/task/delete/';
 }

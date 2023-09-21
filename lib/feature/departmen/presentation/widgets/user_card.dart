@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/constants/app_color.dart';
+import 'package:task_app/core/constants/text_style.dart';
 
-import '../../data/model/department_model.dart';
+import '../../../home_screen/data/model/department_model.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({super.key, required this.employee});
@@ -35,11 +36,11 @@ class UserCard extends StatelessWidget {
               children: [
                 Text(
                   employee.name!,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style:  Style.textStyle14,
                 ),
                 SizedBox(height: 6.h),
                 Container(
+
                   color: Colors.purple.withOpacity(0.3),
                   child: Text(employee.userType!),
                 ),
@@ -52,7 +53,7 @@ class UserCard extends StatelessWidget {
                     ),
                     Text(
                       employee.email!,
-                      style: const TextStyle(fontSize: 10),
+                      style: Style.textStyle8,
                     )
                   ],
                 ),

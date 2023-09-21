@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_app/core/constants/text_style.dart';
-import 'package:task_app/feature/departmen/business_logic/get_all_deparment_cubit/get_all_department_cubit.dart';
-import 'package:task_app/feature/departmen/data/model/department_model.dart';
+import 'package:task_app/feature/home_screen/data/model/department_model.dart';
 
-import '../../../../core/constants/app_color.dart';
 import '../../../../core/widgets/CustomCircularProgressIndicator.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/drawer.dart';
-import '../widgets/defult_tap_controller.dart';
-import '../widgets/department_user.dart';
+import '../../../departmen/presentation/widgets/department_user.dart';
+import '../../business_logic/home_screen_cubit.dart';
 
-class GetAllDepartmentScreen extends StatefulWidget {
-  const GetAllDepartmentScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<GetAllDepartmentScreen> createState() => _GetAllDepartmentScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _GetAllDepartmentScreenState extends State<GetAllDepartmentScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   List<DepartmentModel> departments = [];
 
   @override
   void initState() {
-    BlocProvider.of<GetAllDepartmentCubit>(context).getAllDepartment();
+    BlocProvider.of<HomeScreenCubit>(context).getAllDepartment();
     super.initState();
   }
 
@@ -52,14 +49,14 @@ class _GetAllDepartmentScreenState extends State<GetAllDepartmentScreen> {
         ),
       ]),
       drawer: const AppDrawer(),
-      body: BlocBuilder<GetAllDepartmentCubit, GetAllDepartmentState>(
+      body: BlocBuilder<HomeScreenCubit, HomeScreenState>(
         builder: (context, state) {
-          var cubit = BlocProvider.of<GetAllDepartmentCubit>(context);
+          var cubit = BlocProvider.of<HomeScreenCubit>(context);
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.r),
             child: Column(
               children: [
-                if (state is GetAllDepartmentLoading)
+                if (state is HomeScreenLoading)
                   const CustomCircularProgressIndicator(),
                 Expanded(
                   child: ListView.builder(

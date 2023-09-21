@@ -1,4 +1,4 @@
-import 'manger_model.dart';
+import '../../../departmen/data/model/manger_model.dart';
 
 class DepartmentModel {
   int? id;

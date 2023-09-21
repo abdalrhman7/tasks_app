@@ -3,10 +3,10 @@ import 'package:dio/dio.dart';
 import '../../../../core/network/api_constent.dart';
 import '../model/task_model.dart';
 
-class GetAllTaskWebService {
+class GetAndDeleteTaskWebService {
   final Dio dio;
 
-  GetAllTaskWebService(this.dio);
+  GetAndDeleteTaskWebService(this.dio);
 
   Future<List<TaskModel>> getAllTask({required String token}) async {
     var response = await dio.get(
@@ -23,6 +23,19 @@ class GetAllTaskWebService {
     print('${tasks[0].name}+++++++++++++++++++++++++++++');
 
     return tasks;
+  }
+
+  Future<void> deleteTask({required String token, required int taskId}) async {
+    var response = await dio.delete(
+      '${ApiConstants.deleteTask}$taskId',
+      options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      ),
+    );
+    print(response.data);
   }
 }
 

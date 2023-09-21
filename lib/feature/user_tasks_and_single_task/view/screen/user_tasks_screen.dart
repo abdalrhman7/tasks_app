@@ -1,17 +1,14 @@
-import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task_app/core/constants/app_color.dart';
-import 'package:task_app/core/constants/text_style.dart';
 import 'package:task_app/core/function/main_dialog.dart';
 import 'package:task_app/core/widgets/CustomCircularProgressIndicator.dart';
-import 'package:task_app/feature/user_tasks_and_single_task/business_logic/get_all_task_cubit/get_all_task_cubit.dart';
 import 'package:task_app/feature/user_tasks_and_single_task/data/model/task_model.dart';
 import 'package:task_app/feature/user_tasks_and_single_task/view/widget/task_card.dart';
 
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/drawer.dart';
+import '../../business_logic/get_all_task_cubit/get_all_task_cubit.dart';
 import '../widget/buildPercentIndicator.dart';
 import '../widget/build_calendar_time_line.dart';
 

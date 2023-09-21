@@ -134,7 +134,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ).showAlertDialog();
         }
         if (state is AuthSuccess) {
-          Navigator.of(context).pushNamed(AppRoutes.getAllDepartmentScreen);
+          Navigator.of(context).pushNamed(AppRoutes.homeScreen);
         }
       },
       builder: (context, state) {

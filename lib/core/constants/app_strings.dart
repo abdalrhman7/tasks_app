@@ -50,8 +50,6 @@ class AppStrings {
   static const String assignedDepartment = 'Assigned Department';
 
   ///single_task_screen
-  static const String createAHighIntensity =
-      'Create a High-Intensity Interval Training (HIIT) Workout Routine tap to edit';
   static const String designA20minute =
       'Design a 20-minute HIIT workout routine that includes a warm-up, alternating periods of intense exercise and rest, and a cool-down. Specify the exercises, durations, and intensity levels for each interval.';
 }

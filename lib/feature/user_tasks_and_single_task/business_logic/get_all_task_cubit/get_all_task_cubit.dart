@@ -3,14 +3,14 @@ import 'package:meta/meta.dart';
 import 'package:task_app/core/utilities/secure_storage.dart';
 
 import '../../data/model/task_model.dart';
-import '../../data/repo/get_all_task_repo.dart';
+import '../../data/repo/get_and_delete_task_repo.dart';
 
 part 'get_all_task_state.dart';
 
 class GetAllTaskCubit extends Cubit<GetAllTaskState> {
   GetAllTaskCubit(this.getAllTaskRepo, this.secureStorage)
       : super(GetAllTaskInitial());
-  final GetAllTaskRepo getAllTaskRepo;
+  final GetAndDeleteTaskRepo getAllTaskRepo;
   final SecureStorage secureStorage;
 
   Future<void> getAllTask() async {
@@ -23,4 +23,6 @@ class GetAllTaskCubit extends Cubit<GetAllTaskState> {
       emit(GetAllTaskFailure(e.toString()));
     }
   }
+
+
 }

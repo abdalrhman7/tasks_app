@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:task_app/core/constants/app_color.dart';
 import 'package:task_app/core/widgets/main_button.dart';
 import 'package:task_app/feature/add_new_task/business_logic/get_all_user_cubit/add_task_cubit.dart';
+import 'package:task_app/feature/add_new_task/data/add_task_model/add_task_model.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/text_style.dart';
@@ -28,8 +29,6 @@ class _AuthScreenState extends State<AddNewTaskScreen> {
 
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
-  late TextEditingController _assignedEmployeeController;
-  late TextEditingController _assignedDepartmentController;
   DateRangePickerController datePikerController = DateRangePickerController();
   UserTypes userType = UserTypes.admin;
 
@@ -40,8 +39,6 @@ class _AuthScreenState extends State<AddNewTaskScreen> {
   void initState() {
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
-    _assignedEmployeeController = TextEditingController();
-    _assignedDepartmentController = TextEditingController();
     super.initState();
   }
 
@@ -86,20 +83,6 @@ class _AuthScreenState extends State<AddNewTaskScreen> {
                       const DateRangePickerMonthViewSettings(firstDayOfWeek: 6),
                   selectionMode: DateRangePickerSelectionMode.range,
                   showActionButtons: true,
-                  onSubmit: (value) {
-                    if (value is PickerDateRange) {
-                      final DateTime rangeStartDate = value.startDate!;
-                      final DateTime rangeEndDate = value.endDate!;
-                    } else if (value is DateTime) {
-                      final DateTime selectedDate = value;
-                    } else if (value is List) {
-                      final List selectedDates = value;
-                    } else if (value is List) {
-                      final List selectedRanges = value;
-                    }
-                    print(value);
-                  },
-                  onCancel: () {},
                 ),
                 //SizedBox(height: 8.h),
                 Padding(
@@ -167,7 +150,7 @@ class _AuthScreenState extends State<AddNewTaskScreen> {
           MainDialog(
             context: context,
             title: 'success',
-            content: 'User Added successfully',
+            content: 'Task Added successfully',
           ).showAlertDialog();
         }
         if (state is AddTaskFailure) {
@@ -183,7 +166,6 @@ class _AuthScreenState extends State<AddNewTaskScreen> {
           onTap: () {
             validateAndSubmit(cubit);
           },
-          color: kMainColor,
           text: AppStrings.create,
         );
       },
@@ -191,15 +173,15 @@ class _AuthScreenState extends State<AddNewTaskScreen> {
   }
 
   void validateAndSubmit(AddTaskCubit cubit) {
+    var startData = datePikerController.selectedRange?.startDate;
+    var endData = datePikerController.selectedRange?.endDate;
     if (_formKey.currentState!.validate()) {
-      cubit.addTask(
+      AddTaskModel addTaskModel = AddTaskModel(
           name: _nameController.text,
           description: _descriptionController.text,
-          employeeId: '5',
-          startDate:
-              "${datePikerController.selectedRange?.startDate?.year}-${datePikerController.selectedRange?.startDate?.month}-${datePikerController.selectedRange?.startDate?.day}",
-          endDate:
-              "${datePikerController.selectedRange?.endDate?.year}-${datePikerController.selectedRange?.endDate?.month}-${datePikerController.selectedRange?.endDate?.day}");
+          startDate: "${startData?.year}-${startData?.month}-${startData?.day}",
+          endDate: "${endData?.year}-${endData?.month}-${endData?.day}");
+      cubit.addTask(addTaskModel: addTaskModel);
     }
   }
 }

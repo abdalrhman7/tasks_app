@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/utilities/secure_storage.dart';
-import '../../data/model/department_model.dart';
+import '../../../home_screen/data/model/department_model.dart';
 import '../../data/model/manger_model.dart';
 import '../../data/repo/department_repo.dart';
 

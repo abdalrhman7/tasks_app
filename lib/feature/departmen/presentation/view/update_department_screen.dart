@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/constants/app_color.dart';
 import 'package:task_app/core/widgets/main_button.dart';
-import 'package:task_app/feature/departmen/business_logic/get_all_deparment_cubit/get_all_department_cubit.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/text_style.dart';
 import '../../../../core/utilities/my_validators.dart';
 import '../../../../core/widgets/defaultTextFormFiled.dart';
+import '../../../home_screen/business_logic/home_screen_cubit.dart';
 import '../../business_logic/update_deparment_cubit/update_department_cubit.dart';
 import '../../../../core/widgets/drop_down.dart';
 
@@ -20,21 +20,13 @@ class UpdateDepartmentScreen extends StatefulWidget {
 }
 
 class _UpdateDepartmentScreenState extends State<UpdateDepartmentScreen> {
-  final _formKey = GlobalKey<FormState>();
-  late TextEditingController _nameController;
   String? mangerId;
   String? departmentName = 'Department5';
 
   @override
-  void initState() {
-    _nameController = TextEditingController();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var cubit = BlocProvider.of<UpdateDepartmentCubit>(context);
-    var getAllDepartment = BlocProvider.of<GetAllDepartmentCubit>(context);
+    var getAllDepartment = BlocProvider.of<HomeScreenCubit>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -61,46 +53,33 @@ class _UpdateDepartmentScreenState extends State<UpdateDepartmentScreen> {
                 SizedBox(height: 20.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        BlocConsumer<UpdateDepartmentCubit,
-                            UpdateDepartmentState>(listener: (context, state) {
-                          // TODO: implement listener
-                        }, builder: (context, state) {
-                          if (state is UpdateDepartmentLoading) {
-                            return const CircularProgressIndicator();
-                          }
-                          return DropDownMenuComponent(
-                            hint: ' name',
-                            items: getAllDepartment.departments,
-                            onChanged: (value) {
-                            },
-                          );
-                        }),
-                        SizedBox(height: 20.h),
-                        BlocConsumer<UpdateDepartmentCubit,
-                            UpdateDepartmentState>(listener: (context, state) {
-                          // TODO: implement listener
-                        }, builder: (context, state) {
-                          if (state is UpdateDepartmentLoading) {
-                            return const CircularProgressIndicator();
-                          }
-                          return DropDownMenuComponent(
-                            hint: 'Assigned Manger',
-                            items: cubit.mangers,
-                            onChanged: (value) {
-                              mangerId = value;
-                              print(
-                                  '${mangerId}666666666666666666666666666666666');
-                            },
-                          );
-                        }),
-                        SizedBox(height: 20.h),
-                        buildBlocConsumerMainButton(cubit),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      DropDownMenuComponent(
+                        hint: ' name',
+                        items: getAllDepartment.departments,
+                        onChanged: (value) {
+                          // departmentName = value;
+                          // print(departmentName);
+                        },
+                      ),
+                      SizedBox(height: 20.h),
+                      BlocBuilder<UpdateDepartmentCubit, UpdateDepartmentState>(
+                          builder: (context, state) {
+                        if (state is UpdateDepartmentLoading) {
+                          return const CircularProgressIndicator();
+                        }
+                        return DropDownMenuComponent(
+                          hint: 'Assigned Manger',
+                          items: cubit.mangers,
+                          onChanged: (value) {
+                            mangerId = value;
+                          },
+                        );
+                      }),
+                      SizedBox(height: 20.h),
+                      buildBlocConsumerMainButton(cubit),
+                    ],
                   ),
                 ),
               ],
@@ -111,31 +90,16 @@ class _UpdateDepartmentScreenState extends State<UpdateDepartmentScreen> {
     );
   }
 
-  Widget buildNameTextFormFiled() {
-    return DefaultTextFormFiled(
-      controller: _nameController,
-      label: AppStrings.name,
-      validate: (value) => MyValidators.nameValidator(value),
-      textInputAction: TextInputAction.done,
-    );
-  }
-
   Widget buildBlocConsumerMainButton(UpdateDepartmentCubit cubit) {
     return MainButton(
       onTap: () {
-        validateAndSubmit(cubit);
+        cubit.updateDepartment(
+          name: 'Department5',
+          mangerId: mangerId!,
+        );
       },
       color: kMainColor,
       text: AppStrings.update,
     );
-  }
-
-  void validateAndSubmit(UpdateDepartmentCubit cubit) {
-    if (_formKey.currentState!.validate()) {
-      cubit.updateDepartment(
-        name: 'Department5',
-        mangerId: mangerId!,
-      );
-    }
   }
 }
