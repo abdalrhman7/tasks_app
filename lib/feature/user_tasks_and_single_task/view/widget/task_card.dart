@@ -8,6 +8,7 @@ import 'package:task_app/feature/user_tasks_and_single_task/business_logic/delet
 import 'package:task_app/feature/user_tasks_and_single_task/business_logic/get_all_task_cubit/get_all_task_cubit.dart';
 import 'package:task_app/feature/user_tasks_and_single_task/data/model/task_model.dart';
 
+import '../../../../core/app_route/routes.dart';
 import '../../../../core/constants/app_color.dart';
 import '../../../../core/constants/text_style.dart';
 import '../../../../core/function/main_snack_bar.dart';
@@ -134,9 +135,9 @@ class TaskCard extends StatelessWidget {
         if (state is DeleteTaskLoading) {
           return const CustomCircularProgressIndicator();
         }
-        return IconButton(
-          onPressed: () => deleteTaskCubit.deleteTask(taskId: taskModel.id!),
-          icon: const Icon(
+        return GestureDetector(
+          onTap: () => deleteTaskCubit.deleteTask(taskId: taskModel.id!),
+          child: const Icon(
             Icons.delete,
             color: kMainColor,
           ),

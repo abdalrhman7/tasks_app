@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DefaultTextFormFiled extends StatelessWidget {
-  TextEditingController controller;
-  FormFieldValidator<String> validate;
-  TextInputType? type;
-  String? label;
-  String? hintText;
+ final TextEditingController controller;
+ final FormFieldValidator<String> validate;
+ final TextInputType? type;
+ final String? label;
+ final String? hintText;
   bool isPassword = false;
-  TextInputAction textInputAction;
+ final TextInputAction textInputAction;
   DefaultTextFormFiled({
     super.key,
     required this.controller,

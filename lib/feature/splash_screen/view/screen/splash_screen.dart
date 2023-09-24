@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:task_app/core/app_route/router.dart';
 
+import '../../../../core/app_route/routes.dart';
 import '../../../../core/utilities/secure_storage.dart';
 
 class SplashScreen extends StatefulWidget {

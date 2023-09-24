@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task_app/core/constants/app_color.dart';
 
-
 class MainButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
@@ -13,7 +12,8 @@ class MainButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onTap,
-    this.hasCircularBorder = false,  this.color,
+    this.hasCircularBorder = false,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -27,8 +27,8 @@ class MainButton extends StatelessWidget {
           backgroundColor: kMainColor,
           shape: hasCircularBorder
               ? RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
-          )
+                  borderRadius: BorderRadius.circular(24.0),
+                )
               : null,
         ),
         child: Text(

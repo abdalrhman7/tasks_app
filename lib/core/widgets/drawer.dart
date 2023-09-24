@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../app_route/router.dart';
 import '../../feature/auth/business_logic/auth_cubit.dart';
+import '../app_route/routes.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
