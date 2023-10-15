@@ -1,32 +1,15 @@
+# Flutter App with Bloc State Management and Clean Architecture
+The Task Manager Application is a powerful Flutter-based tool designed to efficiently manage and assign tasks among workers or team members. It allows users to view tasks, create tasks, and assign them to specific employees based on their roles.
 
+# Features 🎯
+- **Task Assignment:** Assign tasks to employees based on their roles and responsibilities.
+- **Role-Based Permissions:** Administrators can assign tasks and monitor employees, while employees can view and manage their assigned tasks.
+- **Task Lists:** Users can view a list of tasks, mark them as complete, or edit task details.
+- **User Management:** Administrators can manage users and roles within the application.
 
-https://github.com/abdalrhman7/tasks_app/assets/119235456/ee366433-e77c-485b-8b11-5609af60bc50
+## Technologies Used
 
-
-
-https://github.com/abdalrhman7/tasks_app/assets/119235456/b352eb91-400a-471e-9a5f-c3d002679197
-
-
-
-
-
-https://github.com/abdalrhman7/tasks_app/assets/119235456/689add50-4016-42cd-9885-5e8ab7601669
-
-
-
-# task_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter:** The application is built using the Flutter framework, ensuring a smooth and responsive user interface.
+- **Bloc State Management:** Bloc is used for state management, providing efficient handling of app states and user interactions.
+- **Clean Architecture:** The project follows Clean Architecture principles for maintainability and scalability.
+- **Dio:** Dio is used for making network requests, enabling smooth interaction with external APIs.
